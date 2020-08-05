@@ -1,17 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div id="app">
+    
+    <button v-on:click="toggle">Toggle</button>
+    <component v-bind:is="component" />
+
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Cadastro from './components/Cadastro.vue'
+import Listagem from './components/Listagem.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Cadastro,
+    Listagem
+  },
+  data (){
+    return {
+      component:"Cadastro"
+    }
+  },
+  methods: {
+    toggle(){
+      if (this.component === Cadastro) {
+        this.component = Listagem;
+      } else {
+        this.component = Cadastro;
+      }
+    }
   }
 }
 </script>
@@ -25,4 +44,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
