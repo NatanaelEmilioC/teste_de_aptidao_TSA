@@ -228,6 +228,15 @@ export default {
   created() {
     setInterval(this.data_criacao, 1000);
   },
+  watch: {
+    persons: {
+      handler() {
+        console.log("Persons array changed!");
+        localStorage.setItem("persons", JSON.stringify(this.persons));
+      },
+      deep: true,
+    },
+  },
   methods: {
     add_person() {
       this.persons.push({
@@ -263,6 +272,11 @@ export default {
         console.log(element.codigo_seguranca);
         console.log(element.criado_em);
       });*/
+    },
+    saveFile: function() {
+      const data = JSON.stringify(this.persons);
+      window.localStorage.setItem("persons", data);
+      console.log(JSON.parse(window.localStorage.getItem("persons")));
     },
     data_criacao: function() {
       const agora = new Date();

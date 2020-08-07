@@ -14,8 +14,9 @@
     />
 
     <div class="header">
-      <a class="active" href="#" v-on:click="troca_para_lista"> Listas</a>
-      <a href="#" v-on:click="troca_para_cadastro"> Cadastro</a>
+      <a class="active" href="#" v-on:click="troca_para_lista">Listas </a>
+      <i class="fas fa-dot-circle"></i>
+      <a href="#" v-on:click="troca_para_cadastro">Cadastro</a>
     </div>
     <div>
       <div class="title_section">
@@ -74,6 +75,12 @@ body {
 a:any-link {
   color: white;
   padding: 20px;
+}
+
+.fas,
+.fa-dot-circle {
+  font-size: 10px;
+  padding-bottom: 2px;
 }
 
 /* Header/logo Title */
