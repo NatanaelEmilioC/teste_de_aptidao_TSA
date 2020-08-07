@@ -14,12 +14,18 @@
     />
 
     <div class="header">
-      <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Listas</a>
-      <a href="#"><i class="fa fa-fw fa-search"></i> Cadastro</a>
+      <a class="active" href="#" v-on:click="troca_para_lista"> Listas</a>
+      <a href="#" v-on:click="troca_para_cadastro"> Cadastro</a>
+    </div>
+    <div>
+      <div class="title_section">
+        <h1>{{ component.name }}</h1>
+        <!--<h1 v-else>{{ component.name }}</h1>-->
+      </div>
     </div>
 
-    <button v-on:click="toggle">Toggle</button>
     <component v-bind:is="component" />
+
     <!-- Footer -->
     <div class="footer">
       <p>
@@ -31,26 +37,25 @@
 
 <script>
 import Cadastro from "./components/Cadastro.vue";
-import Listagem from "./components/Listagem.vue";
+import Lista from "./components/Lista.vue";
 
 export default {
   name: "App",
   components: {
     Cadastro,
-    Listagem,
+    Lista,
   },
   data() {
     return {
-      component: "Cadastro",
+      component: Cadastro,
     };
   },
   methods: {
-    toggle() {
-      if (this.component === Cadastro) {
-        this.component = Listagem;
-      } else {
-        this.component = Cadastro;
-      }
+    troca_para_cadastro() {
+      this.component = Cadastro;
+    },
+    troca_para_lista() {
+      this.component = Lista;
     },
   },
 };
@@ -132,16 +137,6 @@ label {
 
 .note {
   font-size: 80%;
-}
-
-.container {
-  width: 100%;
-  padding-left: 0%;
-  padding-right: 0%;
-}
-
-.inner {
-  width: 60%;
 }
 
 .custom-input {
