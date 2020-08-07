@@ -20,7 +20,6 @@
     <div>
       <div class="title_section">
         <h1>{{ component.name }}</h1>
-        <!--<h1 v-else>{{ component.name }}</h1>-->
       </div>
     </div>
 
@@ -72,6 +71,11 @@ body {
   margin: 0;
 }
 
+a:any-link {
+  color: white;
+  padding: 20px;
+}
+
 /* Header/logo Title */
 .header {
   padding: 10px;
@@ -79,15 +83,6 @@ body {
   text-align: right;
   background: #17222d;
   color: white;
-}
-
-.title_section {
-  padding: 10px;
-  vertical-align: middle;
-  text-align: left;
-  background: #eff4f9;
-  color: #445566;
-  padding-left: 20%;
 }
 
 /* Column container */
@@ -104,6 +99,20 @@ body {
   padding: 10px;
 }
 
+.ajuste_data_mes {
+  flex: 50%;
+  background-color: white;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.ajuste_data_ano {
+  flex: 50%;
+  background-color: white;
+  padding-left: 10px;
+  padding-top: 42px;
+}
+
 button {
   border: none;
   color: white;
@@ -115,16 +124,19 @@ button {
   margin: 4px 2px;
   cursor: pointer;
   background-color: #1188ee;
-  border-radius: 30%;
+  border-radius: 6%;
 }
 
 /* Footer */
 .footer {
-  padding: 20px;
+  padding: 10px;
   text-align: left;
   vertical-align: middle;
   background: #1188ee;
   color: white;
+  position: static;
+  bottom: 0;
+  width: 100%;
 }
 
 label {
@@ -132,6 +144,7 @@ label {
 }
 
 .subsection {
+  padding-top: 10px;
   color: #1188ee;
 }
 
@@ -144,11 +157,39 @@ label {
   box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
 }
 
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
-  .row,
-  .navbar {
-    flex-direction: column;
+  .title_section {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: left;
+    background: #eff4f9;
+    color: #445566;
+    padding-left: 5%;
+  }
+  .ajuste_data_mes {
+    flex: 50%;
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+
+  .ajuste_data_ano {
+    flex: 50%;
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .title_section {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: left;
+    background: #eff4f9;
+    color: #445566;
+    padding-left: 20%;
   }
 }
 </style>

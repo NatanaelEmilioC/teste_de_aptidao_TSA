@@ -1,40 +1,46 @@
 <template>
-  <div class="container">
+  <div class="container ajuste">
     <div class="row">
       <div class="ajuste">
         <div class="form-todo form-group">
-          <p>
-            <label for="nome">Nome</label><br />
-            <input
-              placeholder=""
-              type="text"
-              name="nome"
-              class="form-control custom-input"
-              v-model="nome"
-            />
-          </p>
+          <div class="row">
+            <div class="ajuste">
+              <label for="nome">Nome</label><br />
+              <input
+                placeholder=""
+                type="text"
+                name="nome"
+                class="form-control custom-input"
+                v-model="nome"
+              />
+            </div>
+          </div>
 
-          <p>
-            <label form="email">Email</label><br />
-            <input
-              placeholder=""
-              type="email"
-              name="email"
-              class="form-control custom-input"
-              v-model="email"
-            />
-          </p>
+          <div class="row">
+            <div class="ajuste">
+              <label form="email">Email</label><br />
+              <input
+                placeholder=""
+                type="email"
+                name="email"
+                class="form-control custom-input"
+                v-model="email"
+              />
+            </div>
+          </div>
 
-          <p>
-            <label for="cpf">CPF</label><br />
-            <input
-              placeholder="111.111.111-11"
-              type="text"
-              name="cpf"
-              class="form-control custom-input"
-              v-model="cpf"
-            />
-          </p>
+          <div class="row">
+            <div class="ajuste">
+              <label for="cpf">CPF</label><br />
+              <input
+                placeholder="111.111.111-11"
+                type="text"
+                name="cpf"
+                class="form-control custom-input"
+                v-model="cpf"
+              />
+            </div>
+          </div>
 
           <div class="row">
             <div class="ajuste">
@@ -130,9 +136,9 @@
             </div>
 
             <div class="col-md-6">
-              <label>Data de Expiração</label><br />
               <div class="row">
-                <div class="ajuste">
+                <div class="ajuste_data_mes">
+                  <label>Data de Expiração</label><br />
                   <select
                     id="mes_expiracao"
                     class="form-control custom-input"
@@ -143,7 +149,7 @@
                   </select>
                 </div>
 
-                <div class="ajuste">
+                <div class="ajuste_data_ano">
                   <select
                     id="ano_expiracao"
                     class="form-control custom-input"
@@ -276,7 +282,24 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 60%;
+@media screen and (max-width: 700px) {
+  .row {
+    flex-direction: column;
+  }
+  .container {
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
 }
-</style>>
+
+@media screen and (min-width: 700px) {
+  .container {
+    flex-direction: column;
+    width: 60%;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
