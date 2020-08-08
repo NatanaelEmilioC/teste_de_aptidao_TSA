@@ -1,5 +1,5 @@
 <template>
-<!-- Container principal customizado para reajuste com a tela menor de 1079px-->
+<!-- Container principal customizado para reajuste com a tela menor de 768px-->
   <div class="container custom">
     <div class="row"><!--div auxiliar para alinhamento dos campos-->
       <div class="custom"><!--div auxiliar para reajuste dos campos dos campos-->
@@ -38,7 +38,7 @@
 
           <div class="row">
             <div class="custom"><!--divs para captura do cpf no formulário-->
-              <label for="cpf">CPF</label><br />
+              <label for="cpf">CPF</label><br /><!--v-mask (mascara de formato) aplicado ao cpf no formulário-->
               <input
                 placeholder="111.111.111-11"
                 type="text"
@@ -72,8 +72,8 @@
                   class="form-control custom-input"
                   v-model="estado"
                   @change="get_cidades(estado)"
-                >
-                  <option value="" disabled selected>Selecione o Estado</option>
+                ><!--@change usado como gatilho para filtra as cidades por estado no campo de cidade-->
+                  <option value="" disabled selected>Selecione o Estado</option><!--primeira opção disabled por motivos de customização-->
                   <option v-for="(sigla, index) in siglas" :key="index" v-bind:value="sigla.sigla">{{sigla.sigla}}</option><!--chamada dos dados do json para preenchimento das options-->
                 </select>
               </div>
@@ -82,7 +82,7 @@
 
           <div class="row">
             <div class="custom"><!--divs para captura do cep no formulário-->
-              <label for="cep">CEP</label><br />
+              <label for="cep">CEP</label><br /><!--v-mask (mascara de formato) aplicado ao cep no formulário-->
               <input
                 placeholder="22.222-000"
                 type="text"
@@ -99,14 +99,14 @@
                 id="cidade"
                 class="form-control custom-input"
                 v-model="cidade"
-              ><!--options preenchidas com nomes aleatórios de cidades-->
-                <option value="" disabled selected>Selecione a Cidade</option>
+              ><!--options preenchidas com nomes conforme o estado selecionado-->
+                <option value="" disabled selected>Selecione a Cidade</option><!--primeira opção disabled por motivos de customização-->
                 <option v-for="cidade in cidades" :key="cidade">{{cidade}}</option>
               </select>
             </div>
           </div>
 
-          <div class="subsection"><!--div para marcação da seção da forma de pagamento-->
+          <div class="subsection"><!--div customizada para marcação da seção da forma de pagamento-->
             <p>Forma de Pagamento</p>
           </div>
           <hr />
@@ -134,7 +134,7 @@
             </div>
           </div>
           
-          <!--verifica a forma de pagamento para bloquear a vizualização dos campos que não são de interesse para a forma de pagamento-->
+          <!--v-if verifica a forma de pagamento para bloquear a vizualização dos campos que não são de interesse para a forma de pagamento-->
           <div class="row" v-if="this.forma_de_pagamento === 'cartao_de_credito'">
             <div class="custom">
               <label for="nome_no_cartao">Nome no Cartão</label><!--divs para as informações do cartão-->
@@ -147,7 +147,7 @@
               />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6"><!--div para dividir a row em 3-->
               <div class="row" v-if="this.forma_de_pagamento === 'cartao_de_credito'"><!--divs para as informações sobre a validade cartão-->
                 <div class="custom_month"><!--div customizada para o mês de vencimento do cartão-->
                   <label>Data de Expiração</label><br />
@@ -157,7 +157,7 @@
                     v-model="data_de_expiracao_mes"
                   >
                   <!--options construidas com loop para representar os meses de 1 a 12 (Janeiro a Dezembro)-->
-                    <option value="" disabled selected>Mês</option>
+                    <option value="" disabled selected>Mês</option><!--primeira opção disabled por motivos de customização-->
                        <option v-for="n in 12" :key="n" value="n">{{ n }}</option>
                   </select>
                 </div>
@@ -169,8 +169,8 @@
                     v-model="data_de_expiracao_ano"
                   >
                     <!--options construida com 10 anos de margem (cartão tem validade de 3 a 5 anos dependendo do banco)-->
-                    <option value="" disabled selected>Ano</option>
-                    <option v-for="ano in anos" :key="ano" value="ano">{{ ano }}</option>
+                    <option value="" disabled selected>Ano</option> <!--primeira opção disabled por motivos de customização-->
+                    <option v-for="ano in anos" :key="ano" value="ano">{{ ano }}</option><!--iteração sobre o array com 10 anos para frente do atual-->
                   </select>
                 </div>
               </div>
@@ -179,7 +179,7 @@
 
           <div class="row">
             <div class="custom" v-if="this.forma_de_pagamento === 'cartao_de_credito'">
-              <label for="numero_cartao">Número do Cartão</label>
+              <label for="numero_cartao">Número do Cartão</label><!--v-mask (mascara de formato) aplicado ao numero do cartão no formulário-->
               <input
                 type="text"
                 name="numero_cartao"
@@ -191,7 +191,7 @@
             </div>
 
             <div class="custom"  v-if="this.forma_de_pagamento === 'cartao_de_credito'">
-              <label for="codigo_seguranca">Código de Segurança</label>
+              <label for="codigo_seguranca">Código de Segurança</label><!--v-mask (mascara de formato) aplicado ao codigo de segurança do cartão no formulário-->
               <input
                 type="number"
                 name="codigo_seguranca"
@@ -205,7 +205,7 @@
           <hr />
           <br />
           <p>Seu cartão será debitado em R$ 49,00</p>
-
+          <!--botão para adicionar usuário ao array de persons-->
           <button v-on:click="add_person" type="submit">
             REALIZAR MATRÍCULA
           </button>
@@ -220,6 +220,7 @@
 </template>
 
 <script>
+//importando a lista de cidades e estados
 import siglas from "@/data/siglas_estados";
 export default {
  
@@ -227,44 +228,44 @@ export default {
   data() {
     
     return {
-      siglas,
-      cidades:[],
-      anos:[],
-      erros:[],
-      persons: [],
-      nome: null,
-      email: null,
-      cpf: null,
-      endereco: "",
-      estado: "",
-      cep: "",
-      cidade: "",
-      forma_de_pagamento: "",
-      nome_no_cartao: "",
-      data_de_expiracao_mes: "",
-      data_de_expiracao_ano: "",
-      numero_cartao: "",
-      codigo_seguranca: "",
-      criado_em: "",
+      siglas,//auxiliar para armazenar a sigla do estado
+      cidades:[],//lista auxiliar para as cidades do estado
+      anos:[],//lista auxiliar para armazenar os proximos 10 anos
+      erros:[],//lista auxiliar para armazenar os erros no preenchimento do formulário
+      persons: [],//lista de pessoas cadastradas
+      nome: null,//campo para nome da pessoa
+      email: null,//campo para email
+      cpf: null,//campo para cpf
+      endereco: "",//campo para endereço
+      estado: "",//campo para estado
+      cep: "",//camppo para cep
+      cidade: "",//campo para cidade
+      forma_de_pagamento: "",//campo para forma de pagamento
+      nome_no_cartao: "",//campo para nome impressão no cartão
+      data_de_expiracao_mes: "",//mes de expiração do cartão
+      data_de_expiracao_ano: "",//ano de expiração do cartão
+      numero_cartao: "",//numero do cartão
+      codigo_seguranca: "",//codigo de segurança do cartão
+      criado_em: "",//campo auxiliar para gerar a data de criação da person
     };
   },
   created() {
-    setInterval(this.created_date, 1000);
+    setInterval(this.created_date, 1000);//gatilho para capturar a data de criação
   },
   watch: {
     persons: {
       handler() {
         console.log("Persons array alterado!");
-        localStorage.setItem("persons", JSON.stringify(this.persons));
-        this.erros = [];
+        localStorage.setItem("persons", JSON.stringify(this.persons));//auxiliar para escrever no localStorage
+        this.erros = [];//inicializando o array de erros encontrados no preenchimento
       },
       deep: true,
     },
   },
   methods: {
     add_person() {
-      this.check_form()
-      this.persons.push({
+      this.check_form()//verificar se o minimo de dados foram inseridos para incluir pessoa
+      this.persons.push({//adicionando a pessoa cadastrada na lista de persons
         nome: this.nome,
         email: this.email,
         cpf: this.cpf,
@@ -281,12 +282,7 @@ export default {
         criado_em: this.criado_em,
       });
     },
-    saveFile: function() {
-      const data = JSON.stringify(this.persons);
-      window.localStorage.setItem("persons", data);
-      console.log(JSON.parse(window.localStorage.getItem("persons")));
-    },
-    created_date: function() {
+    created_date: function() {//função para formata o time stamp para um padrão mais amigável
       const agora = new Date();
       const data =
         agora.getFullYear() +
@@ -299,21 +295,21 @@ export default {
       const dateTime = data + " " + hora;
       this.criado_em = dateTime;
     },
-    check_form:function(e) {
+    check_form:function(e) {//função para checar o emial nome e cpf
       if(this.nome && this.cpf && this.email) return true;
-      this.erros = [];
+      this.erros = [];//inicializa vetor de erros
       if(!this.nome) this.erros.push("Nome obrigatório.");
       if(!this.email) this.erros.push("Email obrigatório.");
       if(!this.cpf) this.erros.push("Cpf obrigatório.");
-      e.preventDefault();
+      e.preventDefault();//stop point para submição com erro
     },
-    get_years: function () {	
+    get_years: function () {	//função que gera a lista com 10 proximos anos
       for (let index = 0; index < 10; index++) {
         this.anos.push((new Date()).getFullYear() + index);
       }
 		
     },
-    get_cidades: function(estado){
+    get_cidades: function(estado){//função para filtrar as cidades conforme estado passado
       this.siglas.forEach(element => {
         if(element.sigla === estado)
         this.cidades = element.cidades;
@@ -322,12 +318,12 @@ export default {
   },
   mounted() {
     console.log("Local Storage Limpo");
-    localStorage.clear();
-    this.siglas = siglas;
-    this.get_years();
+    localStorage.clear();//limpa o localstorage
+    this.siglas = siglas;//predefine a lista de siglas
+    this.get_years();//gatilho para forma a lista com os 10 proximos anos
     this.forma_de_pagamento = 'cartao_de_credito';//inicializando o radio para vizualizar todos os campos quando montar a pagina
-    this.estado = 'AM';
-    this.get_cidades(this.estado);
+    this.estado = 'AM';//inicializando o estado
+    this.get_cidades(this.estado);//inicializa a lista de cidades como o estado predefinido
   },
 };
 </script>
@@ -335,8 +331,8 @@ export default {
 <style scoped>
 
 
-
-@media screen and (max-width: 1079px) {
+/*style proprio para o cadastro para ajuste para telas menores que 768px*/
+@media screen and (max-width: 768px) {
   .row {
     flex-direction: column;
   }
@@ -348,7 +344,8 @@ export default {
   }
 }
 
-@media screen and (min-width: 1079px) {
+/*style proprio para o cadastro para ajuste para telas maiores que 768px*/
+@media screen and (min-width: 768px) {
   .container {
     flex-direction: column;
     width: 60%;

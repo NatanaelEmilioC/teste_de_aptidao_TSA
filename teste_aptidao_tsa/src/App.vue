@@ -15,19 +15,23 @@
     />
 
     <div class="header">
-      <a class="active" href="#" v-on:click="change_to_lista">Listas </a>
-      <i class="fas fa-dot-circle"></i>
-      <a href="#" v-on:click="change_to_cadastro">Cadastro</a>
+      <a class="active" href="#" v-on:click="change_to_lista">Listas </a
+      ><!--troca o component injetado para lista-->
+      <i class="fas fa-dot-circle"></i
+      ><!--insere o icone entre os links-->
+      <a href="#" v-on:click="change_to_cadastro">Cadastro</a
+      ><!--troca o component injetado para cadastro-->
     </div>
     <div>
+      <!--carregamento do titulo da seção conforme o componente injetado-->
       <div class="title_section">
         <h1>{{ component.name }}</h1>
       </div>
     </div>
 
-    <component v-bind:is="component" />
+    <component v-bind:is="component" /><!--injeção do component-->
 
-    <!-- Footer -->
+    <!-- injeção do Footer -->
     <div class="footer">
       <p>
         Natanael E. Costa - 2020
@@ -37,21 +41,24 @@
 </template>
 
 <script>
+//carregamento dos components a serem injetados
 import Cadastro from "./components/Cadastro.vue";
 import Lista from "./components/Lista.vue";
 
 export default {
   name: "App",
   components: {
+    //inclusão dos components a serem injetados
     Cadastro,
     Lista,
   },
   data() {
     return {
-      component: Cadastro,
+      component: Cadastro, //passagem do component para injeção
     };
   },
   methods: {
+    //funções para trocar os components a serem injetados
     change_to_cadastro() {
       this.component = Cadastro;
     },
@@ -72,19 +79,19 @@ body {
   font-family: Nunito;
   margin: 0;
 }
-
+/*troca a cor do link para branco*/
 a:any-link {
   color: white;
   padding: 20px;
 }
-
+/*customiza o icone inserido entre os links*/
 .fas,
 .fa-dot-circle {
   font-size: 10px;
   padding-bottom: 2px;
 }
 
-/* Header/logo Title */
+/*customização do Header */
 .header {
   padding: 10px;
   vertical-align: middle;
@@ -107,6 +114,7 @@ a:any-link {
   padding: 10px;
 }
 
+/*customização das columns para a inclusão do mês de expiração do cartão*/
 .custom_month {
   flex: 50%;
   background-color: white;
@@ -114,6 +122,7 @@ a:any-link {
   padding-top: 10px;
 }
 
+/*customização das columns para a inclusão do ano de expiração do cartão*/
 .custom_year {
   flex: 50%;
   background-color: white;
@@ -121,6 +130,7 @@ a:any-link {
   padding-top: 42px;
 }
 
+/*customização do botão de submit */
 button {
   border: none;
   color: white;
@@ -135,7 +145,7 @@ button {
   border-radius: 6%;
 }
 
-/* Footer */
+/* customização do Footer */
 .footer {
   padding: 10px;
   text-align: left;
@@ -147,25 +157,34 @@ button {
   width: 100%;
 }
 
+/*customização das labels */
 label {
   color: #445566;
 }
-
+/*customização para as subseções*/
 .subsection {
   padding-top: 10px;
   color: #1188ee;
 }
 
+/*estilo para a nota na base do formulário */
 .note {
   font-size: 80%;
 }
 
+/*customização dos campos de imput */
 .custom-input {
   background: #eff4f9;
   box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
 }
 
-@media screen and (max-width: 1079px) {
+/*customização da mensagem de erro no formulário */
+.error_message {
+  color: red;
+}
+
+/*configurações gerais do flex do layout para telas pequenas */
+@media screen and (max-width: 768px) {
   .title_section {
     padding: 10px;
     vertical-align: middle;
@@ -174,6 +193,7 @@ label {
     color: #445566;
     padding-left: 5%;
   }
+  /*ajuste dos campos de mês de expiração do cartão por conta do deslocamento */
   .custom_month {
     flex: 50%;
     background-color: white;
@@ -181,6 +201,7 @@ label {
     padding-top: 10px;
   }
 
+  /*ajuste dos campos de ano de expiração do cartão por conta do deslocamento */
   .custom_year {
     flex: 50%;
     background-color: white;
@@ -190,11 +211,8 @@ label {
   }
 }
 
-.error_message {
-  color: red;
-}
-
-@media screen and (min-width: 1079px) {
+/*configurações de estilo gerais para titulo da seção para telas grandes*/
+@media screen and (min-width: 768px) {
   .title_section {
     padding: 10px;
     vertical-align: middle;
