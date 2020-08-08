@@ -45,6 +45,7 @@
                 name="cpf"
                 class="form-control custom-input"
                 v-model="cpf"
+                v-mask="'###.###.###-##'"
               />
             </div>
           </div>
@@ -88,6 +89,7 @@
                 name="cep"
                 class="form-control custom-input"
                 v-model="cep"
+                v-mask="'##.###-###'"
               />
             </div>
 
@@ -184,6 +186,7 @@
                 placeholder="55555 55555 55555 55555"
                 class="form-control custom-input"
                 v-model="numero_cartao"
+                v-mask="'##### ##### ##### #####'"
               />
             </div>
 
@@ -195,6 +198,7 @@
                 placeholder="XXX"
                 class="form-control custom-input"
                 v-model="codigo_seguranca"
+                v-mask="'###'"
               />
             </div>
           </div>
