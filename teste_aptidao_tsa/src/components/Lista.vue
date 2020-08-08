@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1079px) {
   .row {
     flex-direction: column;
   }
@@ -60,7 +60,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1079px) {
   .container {
     flex-direction: column;
     width: 60%;

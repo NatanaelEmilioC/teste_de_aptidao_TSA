@@ -165,7 +165,7 @@ label {
   box-shadow: 0px 2px 2px rgba(187, 204, 221, 0.4);
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1079px) {
   .title_section {
     padding: 10px;
     vertical-align: middle;
@@ -190,7 +190,11 @@ label {
   }
 }
 
-@media screen and (min-width: 700px) {
+.error_message {
+  color: red;
+}
+
+@media screen and (min-width: 1079px) {
   .title_section {
     padding: 10px;
     vertical-align: middle;
