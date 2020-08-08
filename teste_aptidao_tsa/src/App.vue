@@ -2,6 +2,7 @@
   <div id="app">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
@@ -14,9 +15,9 @@
     />
 
     <div class="header">
-      <a class="active" href="#" v-on:click="troca_para_lista">Listas </a>
+      <a class="active" href="#" v-on:click="change_to_lista">Listas </a>
       <i class="fas fa-dot-circle"></i>
-      <a href="#" v-on:click="troca_para_cadastro">Cadastro</a>
+      <a href="#" v-on:click="change_to_cadastro">Cadastro</a>
     </div>
     <div>
       <div class="title_section">
@@ -51,10 +52,10 @@ export default {
     };
   },
   methods: {
-    troca_para_cadastro() {
+    change_to_cadastro() {
       this.component = Cadastro;
     },
-    troca_para_lista() {
+    change_to_lista() {
       this.component = Lista;
     },
   },
@@ -99,21 +100,21 @@ a:any-link {
   width: 100%;
 }
 
-/* ajuste column */
-.ajuste {
+/* custom column */
+.custom {
   flex: 50%;
   background-color: white;
   padding: 10px;
 }
 
-.ajuste_data_mes {
+.custom_month {
   flex: 50%;
   background-color: white;
   padding-left: 10px;
   padding-top: 10px;
 }
 
-.ajuste_data_ano {
+.custom_year {
   flex: 50%;
   background-color: white;
   padding-left: 10px;
@@ -173,14 +174,14 @@ label {
     color: #445566;
     padding-left: 5%;
   }
-  .ajuste_data_mes {
+  .custom_month {
     flex: 50%;
     background-color: white;
     padding-left: 10px;
     padding-top: 10px;
   }
 
-  .ajuste_data_ano {
+  .custom_year {
     flex: 50%;
     background-color: white;
     padding-left: 10px;

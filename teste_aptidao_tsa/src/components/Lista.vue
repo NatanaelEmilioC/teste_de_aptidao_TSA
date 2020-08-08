@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div class="subsection">
-      <p>Lista de Clientes</p>
+      Lista de Clientes
     </div>
     <hr />
     <div class="label">
-      <p>Nome do Cliente</p>
+      Nome do Cliente
     </div>
-
+    <input type="text" class="form-control custom-input" />
     <div id="q-app">
       <div class="q-pa-md">
         <q-table :data="persons" :columns="columns" row-key="name"></q-table>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import persons from "@/data/persons";
+import persons from "@/data/pessoas";
 
 export default {
   name: "Lista",
@@ -34,13 +34,16 @@ export default {
           align: "left",
         },
       ],
-      persons: persons,
+      persons,
     };
   },
   mounted() {
     console.log("App Mounted");
     if (localStorage.getItem("persons"))
       this.persons = JSON.parse(localStorage.getItem("persons"));
+    else {
+      this.persons = persons;
+    }
   },
 };
 </script>

@@ -1,10 +1,16 @@
 <template>
-  <div class="container ajuste">
+  <div class="container custom">
     <div class="row">
-      <div class="ajuste">
-        <div class="form-todo form-group">
+      <div class="custom">
+        <div class="form-todo form-group" @submit="check_form">
+        <p v-if="erros.length">
+          <b>Favor corrigir os erro(s):</b>
+          <ul>
+           <li v-for="(error, index) in erros" :key="index">{{ error }}</li>
+          </ul>
+           </p>
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <label for="nome">Nome</label><br />
               <input
                 placeholder=""
@@ -17,7 +23,7 @@
           </div>
 
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <label form="email">Email</label><br />
               <input
                 placeholder=""
@@ -30,7 +36,7 @@
           </div>
 
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <label for="cpf">CPF</label><br />
               <input
                 placeholder="111.111.111-11"
@@ -43,7 +49,7 @@
           </div>
 
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <label for="endereco">Endereço</label><br />
               <input
                 placeholder="Rua, Numero e Bairro"
@@ -55,7 +61,7 @@
               />
             </div>
 
-            <div class="ajuste">
+            <div class="custom">
               <label for="estado">Estado</label><br />
               <div class="custom_select">
                 <select
@@ -65,14 +71,14 @@
                   v-model="estado"
                 >
                   <option value="" disabled selected>Selecione o Estado</option>
-                  <option value="MG">MG</option>
+                  <option v-for="(sigla, index) in siglas" :key="index" v-bind:value="sigla.sigla">{{sigla.sigla}}</option>
                 </select>
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <label for="cep">CEP</label><br />
               <input
                 placeholder="22.222-000"
@@ -83,7 +89,7 @@
               />
             </div>
 
-            <div class="ajuste">
+            <div class="custom">
               <label for="cidade">Cidade</label><br />
               <select
                 id="cidade"
@@ -101,7 +107,7 @@
           </div>
           <hr />
           <div class="row">
-            <div class="ajuste">
+            <div class="custom">
               <input
                 type="radio"
                 id="cartao_de_credito"
@@ -111,7 +117,7 @@
               />
               <label for="cartao_de_credito">Cartão de Crédito</label>
             </div>
-            <div class="ajuste">
+            <div class="custom">
               <input
                 type="radio"
                 id="boleto_bancario"
@@ -123,8 +129,8 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="ajuste">
+          <div class="row" v-if="this.forma_de_pagamento === 'cartao_de_credito'">
+            <div class="custom">
               <label for="nome_no_cartao">Nome no Cartão</label>
               <input
                 type="text"
@@ -136,8 +142,8 @@
             </div>
 
             <div class="col-md-6">
-              <div class="row">
-                <div class="ajuste_data_mes">
+              <div class="row" v-if="this.forma_de_pagamento === 'cartao_de_credito'">
+                <div class="custom_month">
                   <label>Data de Expiração</label><br />
                   <select
                     id="mes_expiracao"
@@ -145,11 +151,12 @@
                     v-model="data_de_expiracao_mes"
                   >
                     <option value="" disabled selected>Mês</option>
-                    <option value="01">01</option>
+                       <option v-for="n in 12" :key="n" value="n">{{ n }}</option>
+
                   </select>
                 </div>
 
-                <div class="ajuste_data_ano">
+                <div class="custom_year">
                   <select
                     id="ano_expiracao"
                     class="form-control custom-input"
@@ -157,6 +164,11 @@
                   >
                     <option value="" disabled selected>Ano</option>
                     <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
                   </select>
                 </div>
               </div>
@@ -164,7 +176,7 @@
           </div>
 
           <div class="row">
-            <div class="ajuste">
+            <div class="custom" v-if="this.forma_de_pagamento === 'cartao_de_credito'">
               <label for="numero_cartao">Número do Cartão</label>
               <input
                 type="text"
@@ -175,7 +187,7 @@
               />
             </div>
 
-            <div class="ajuste">
+            <div class="custom"  v-if="this.forma_de_pagamento === 'cartao_de_credito'">
               <label for="codigo_seguranca">Código de Segurança</label>
               <input
                 type="number"
@@ -204,14 +216,19 @@
 </template>
 
 <script>
+import siglas from "@/data/siglas_estados";
 export default {
+ 
   name: "Cadastro",
   data() {
+    
     return {
+      siglas,
+      erros:[],
       persons: [],
-      nome: "",
-      email: "",
-      cpf: "",
+      nome: null,
+      email: null,
+      cpf: null,
       endereco: "",
       estado: "",
       cep: "",
@@ -226,19 +243,21 @@ export default {
     };
   },
   created() {
-    setInterval(this.data_criacao, 1000);
+    setInterval(this.created_date, 1000);
   },
   watch: {
     persons: {
       handler() {
-        console.log("Persons array changed!");
+        console.log("Persons array alterado!");
         localStorage.setItem("persons", JSON.stringify(this.persons));
+        this.erros = [];
       },
       deep: true,
     },
   },
   methods: {
     add_person() {
+      this.check_form()
       this.persons.push({
         nome: this.nome,
         email: this.email,
@@ -255,30 +274,13 @@ export default {
         codigo_seguranca: this.codigo_seguranca,
         criado_em: this.criado_em,
       });
-      /*this.persons.forEach((element) => {
-        console.log("chamado!");
-        console.log(element.nome);
-        console.log(element.email);
-        console.log(element.cpf);
-        console.log(element.endereco);
-        console.log(element.estado);
-        console.log(element.cep);
-        console.log(element.cidade);
-        console.log(element.forma_de_pagamento);
-        console.log(element.nome_no_cartao);
-        console.log(element.data_de_expiracao_mes);
-        console.log(element.data_de_expiracao_ano);
-        console.log(element.numero_cartao);
-        console.log(element.codigo_seguranca);
-        console.log(element.criado_em);
-      });*/
     },
     saveFile: function() {
       const data = JSON.stringify(this.persons);
       window.localStorage.setItem("persons", data);
       console.log(JSON.parse(window.localStorage.getItem("persons")));
     },
-    data_criacao: function() {
+    created_date: function() {
       const agora = new Date();
       const data =
         agora.getFullYear() +
@@ -291,6 +293,19 @@ export default {
       const dateTime = data + " " + hora;
       this.criado_em = dateTime;
     },
+    check_form:function(e) {
+      if(this.nome && this.cpf && this.email) return true;
+      this.erros = [];
+      if(!this.nome) this.erros.push("Nome obrigatório.");
+      if(!this.email) this.erros.push("Email obrigatório.");
+      if(!this.cpf) this.erros.push("Cpf obrigatório.");
+      e.preventDefault();
+    },
+  },
+  mounted() {
+    console.log("Local Storage Limpo");
+    localStorage.clear();
+    this.siglas = siglas;
   },
 };
 </script>
